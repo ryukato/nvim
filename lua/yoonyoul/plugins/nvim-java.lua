@@ -6,27 +6,24 @@ return {
 		"nvim-java/nvim-java-test",
 		"nvim-java/nvim-java-dap",
 		"MunifTanjim/nui.nvim",
-		"neovim/nvim-lspconfig",
+		{
+			"neovim/nvim-lspconfig",
+			dependencies = { "williamboman/mason-lspconfig.nvim" },
+			{
+				"williamboman/mason-lspconfig.nvim",
+				dependencies = {
+					{
+						"williamboman/mason.nvim",
+						opts = {
+							registries = {
+								"github:nvim-java/mason-registry",
+								"github:mason-org/mason-registry",
+							},
+						},
+					},
+				},
+			},
+		},
 		"mfussenegger/nvim-dap",
-		{
-			"williamboman/mason.nvim",
-			opts = {
-				registries = {
-					"github:nvim-java/mason-registry",
-					"github:mason-org/mason-registry",
-				},
-			},
-		},
-		{
-			"williamboman/mason-lspconfig.nvim",
-			opts = {
-				handlers = {
-					["jdtls"] = function()
-						require("java").setup()
-					end,
-				},
-			},
-		},
 	},
-	opts = {},
 }

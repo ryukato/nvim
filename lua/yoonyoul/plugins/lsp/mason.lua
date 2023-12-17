@@ -5,7 +5,7 @@ return {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
 	config = function(_, opts)
-		vim.print(opts)
+		--[[ vim.print(opts) ]]
 		-- import mason
 		local mason = require("mason")
 
@@ -22,6 +22,7 @@ return {
 		-- enable mason and configure icons
 		mason.setup(conf)
 		-- import mason-lspconfig
+		require("java").setup()
 		local mason_lspconfig = require("mason-lspconfig")
 
 		local mason_tool_installer = require("mason-tool-installer")
@@ -30,10 +31,13 @@ return {
 			-- list of servers for mason to install
 			ensure_installed = {
 				"tsserver",
-				"html",
 				"lua_ls",
 			},
-			-- auto-install configured servers (with lspconfig)
+			handlers = {
+				["jdtls"] = function()
+					require("lspconfig").jdtls.setup({})
+				end,
+			},
 			automatic_installation = true, -- not the same as ensure_installed
 		})
 
